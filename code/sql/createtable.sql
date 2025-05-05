@@ -30,7 +30,7 @@ CREATE TABLE WatchHistory
 
 CREATE TABLE Favorites
 (
-  movieID DATE NOT NULL,
+  movieID INT NOT NULL,
   lastSeen DATE NOT NULL,
   totalTimeWatched FLOAT NOT NULL,
   PRIMARY KEY (movieID)

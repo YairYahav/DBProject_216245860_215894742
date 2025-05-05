@@ -6,6 +6,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- Drop tables in reverse order of dependencies
 
+DROP TABLE IF EXISTS MarksAsFavorite;
+
 DROP TABLE IF EXISTS Favorites;
 
 DROP TABLE IF EXISTS WatchHistory;

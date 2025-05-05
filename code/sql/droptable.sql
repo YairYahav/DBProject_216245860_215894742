@@ -6,17 +6,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- Drop tables in reverse order of dependencies
 
-DROP TABLE IF EXISTS CustomerSegmentAssignment;
+DROP TABLE IF EXISTS Favorites;
 
-DROP TABLE IF EXISTS CustomerSegment;
+DROP TABLE IF EXISTS WatchHistory;
 
-DROP TABLE IF EXISTS CustomerNote;
+DROP TABLE IF EXISTS Reviews;
 
-DROP TABLE IF EXISTS CustomerDocument;
+DROP TABLE IF EXISTS Profile;
 
-DROP TABLE IF EXISTS Contact;
+DROP TABLE IF EXISTS Devices;
 
-DROP TABLE IF EXISTS Address;
+DROP TABLE IF EXISTS Payment;
 
 DROP TABLE IF EXISTS Customer;
 

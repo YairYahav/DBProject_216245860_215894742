@@ -1,69 +1,83 @@
-CREATE TABLE Customer (
-    CustomerID INT PRIMARY KEY,
-    Customer_First_Name VARCHAR(50),
-    Customer_Last_Name VARCHAR(50),
-    ssn VARCHAR(20) UNIQUE,
-    date_of_birth DATE,
-    customer_since DATE
+CREATE TABLE customer
+(
+  firstName VARCHAR NOT NULL,
+  lastName VARCHAR NOT NULL,
+  customerID INT NOT NULL,
+  dateOfBirth DATE NOT NULL,
+  customerSince DATE NOT NULL,
+  PRIMARY KEY (customerID)
 );
 
-CREATE TABLE Address (
-    addressID INT PRIMARY KEY,
-    customer_id INT,
-    street_address VARCHAR(255),
-    city_name VARCHAR(50),
-    state VARCHAR(50),
-    zip_code VARCHAR(20),
-    country VARCHAR(50),
-    asress_type VARCHAR(50),  -- Assuming "asress_type" is a typo for "address_type"
-    is_primary BOOLEAN,
-    FOREIGN KEY (customer_id) REFERENCES Customer(CustomerID) ON DELETE CASCADE
+CREATE TABLE Devices
+(
+  deviceName VARCHAR NOT NULL,
+  deviceID INT NOT NULL,
+  lastSeen DATE NOT NULL,
+  deviceType VARCHAR NOT NULL,
+  customerID INT NOT NULL,
+  PRIMARY KEY (deviceID),
+  FOREIGN KEY (customerID) REFERENCES customer(customerID)
 );
 
-CREATE TABLE Contact (
-    contactID INT PRIMARY KEY,
-    customer_id INT,
-    contact_type VARCHAR(50),
-    contact_value VARCHAR(100),
-    is_primary BOOLEAN,
-    FOREIGN KEY (customer_id) REFERENCES Customer(CustomerID) ON DELETE CASCADE
+CREATE TABLE WatchHistory
+(
+  movieID INT NOT NULL,
+  watchDate DATE NOT NULL,
+  durationWatched FLOAT NOT NULL,
+  WatchHistoryID INT NOT NULL,
+  PRIMARY KEY (WatchHistoryID)
 );
 
-CREATE TABLE CustomerDocument (
-    document_id INT PRIMARY KEY,
-    customer_id INT,
-    document_type VARCHAR(50),
-    document_number VARCHAR(50) UNIQUE,
-    issue_date DATE,
-    expiry_date DATE,
-    verification_status BOOLEAN,
-    file_reference VARCHAR(255),
-    FOREIGN KEY (customer_id) REFERENCES Customer(CustomerID) ON DELETE CASCADE
+CREATE TABLE Favorites
+(
+  movieID DATE NOT NULL,
+  lastSeen DATE NOT NULL,
+  totalTimeWatched FLOAT NOT NULL,
+  PRIMARY KEY (movieID)
 );
 
-CREATE TABLE CustomerNote (
-    note_id INT PRIMARY KEY,
-    customer_id INT,
-    employee_id INT,  -- Assuming employees exist in another table
-    note_date DATE,
-    note_category VARCHAR(50),
-    note_text TEXT,
-    is_important BOOLEAN,
-    FOREIGN KEY (customer_id) REFERENCES Customer(CustomerID) ON DELETE CASCADE
+CREATE TABLE Payment
+(
+  paymentID INT NOT NULL,
+  paymentDate DATE NOT NULL,
+  amount FLOAT NOT NULL,
+  currency VARCHAR NOT NULL,
+  paymentMethod VARCHAR NOT NULL,
+  status VARCHAR NOT NULL,
+  customerID INT NOT NULL,
+  PRIMARY KEY (paymentID),
+  FOREIGN KEY (customerID) REFERENCES customer(customerID)
 );
 
-CREATE TABLE CustomerSegment (
-    segment_id INT PRIMARY KEY,
-    segment_name VARCHAR(100),
-    description TEXT,
-    min_balance_required DECIMAL(10,2)
+CREATE TABLE Profile
+(
+  profileName VARCHAR NOT NULL,
+  profilePicture VARCHAR NOT NULL,
+  isOnline BOOL NOT NULL,
+  profileID INT NOT NULL,
+  WatchHistoryID INT NOT NULL,
+  customerID INT NOT NULL,
+  PRIMARY KEY (profileID),
+  FOREIGN KEY (WatchHistoryID) REFERENCES WatchHistory(WatchHistoryID),
+  FOREIGN KEY (customerID) REFERENCES customer(customerID)
 );
 
-CREATE TABLE CustomerSegmentAssignment (
-    assignment_id INT PRIMARY KEY,
-    customer_id INT,
-    segment_id INT,
-    assigned_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES Customer(CustomerID) ON DELETE CASCADE,
-    FOREIGN KEY (segment_id) REFERENCES CustomerSegment(segment_id) ON DELETE CASCADE
+CREATE TABLE Reviews
+(
+  rating INT NOT NULL,
+  movieID INT NOT NULL,
+  comment VARCHAR NOT NULL,
+  reviewDate DATE NOT NULL,
+  profileID INT NOT NULL,
+  PRIMARY KEY (movieID),
+  FOREIGN KEY (profileID) REFERENCES Profile(profileID)
+);
+
+CREATE TABLE MarksAsFavorite
+(
+  profileID INT NOT NULL,
+  movieID DATE NOT NULL,
+  PRIMARY KEY (profileID, movieID),
+  FOREIGN KEY (profileID) REFERENCES Profile(profileID),
+  FOREIGN KEY (movieID) REFERENCES Favorites(movieID)
 );

@@ -1,52 +1,55 @@
--- Insert sample data into the Employee table
-INSERT INTO Employee (EmployeeID, Name) VALUES
-('E001', 'John Smith'),
-('E002', 'Jane Doe'),
-('E003', 'Robert Johnson'),
-('E004', 'Maria Garcia'),
-('E005', 'David Lee'),
-('E006', 'Sarah Wilson'),
-('E007', 'Michael Brown'),
-('E008', 'Lisa Taylor');
+-- Customer
+INSERT INTO Customer (firstName, lastName, customerID, dateOfBirth, customerSince) 
+VALUES 
+  ('Yair', 'Yahav', 1, DATE '2006-03-10', DATE '2023-01-01'),
+  ('Dana', 'Cohen', 2, DATE '1998-12-05', DATE '2022-06-15'),
+  ('Avi', 'Levi', 3, DATE '1992-07-23', DATE '2021-11-20');
 
--- Insert data into the Manager table
-INSERT INTO Manager (EmployeeID, OfficeNumber, Benefits) VALUES
-('E001', 'A101', 'Health, Dental, 401k, Stock Options'),
-('E005', 'B202', 'Health, Dental, 401k'),
-('E007', 'C303', 'Health, Vision, 401k, Company Car');
+-- Devices
+INSERT INTO Devices (deviceName, deviceID, lastSeen, deviceType, customerID) 
+VALUES 
+  ('Phone', 1, DATE '2023-05-01', 'Smartphone', 1),
+  ('Laptop', 2, DATE '2023-05-02', 'Laptop', 2),
+  ('Tablet', 3, DATE '2023-05-03', 'Tablet', 3);
 
--- Insert data into the Department table
-INSERT INTO Department (DepartmentID, Name, Location, ManagerID) VALUES
-('D001', 'Engineering', 'Building A, Floor 2', 'E001'),
-('D002', 'Marketing', 'Building B, Floor 1', 'E005'),
-('D003', 'Finance', 'Building A, Floor 3', 'E007');
+-- WatchHistory
+INSERT INTO WatchHistory (movieID, watchDate, durationWatched, WatchHistoryID) 
+VALUES 
+  (101, DATE '2023-04-01', 120.5, 1),
+  (102, DATE '2023-04-02', 150.0, 2),
+  (103, DATE '2023-04-03', 90.0, 3);
 
--- Insert data into the Subordinate table
-INSERT INTO Subordinate (EmployeeID, DeskNumber, TimeAtJob, DepartmentID) VALUES
-('E002', 'A123', 36, 'D001'),  -- 36 months in Engineering
-('E003', 'A124', 24, 'D001'),  -- 24 months in Engineering
-('E004', 'B125', 18, 'D002'),  -- 18 months in Marketing
-('E006', 'A126', 12, 'D001'),  -- 12 months in Engineering
-('E008', 'C127', 48, 'D003');  -- 48 months in Finance
+-- Favorites
+INSERT INTO Favorites (movieID, lastSeen, totalTimeWatched) 
+VALUES 
+  (101, DATE '2023-04-01', 120.5),
+  (102, DATE '2023-04-02', 150.0),
+  (103, DATE '2023-04-03', 90.0);
 
--- Insert data into the Payroll table
-INSERT INTO Payroll (EmployeeID, Salary, PaymentFrequency) VALUES
-('E001', 120000.00, 'Monthly'),
-('E002', 75000.00, 'Bi-weekly'),
-('E003', 78000.00, 'Bi-weekly'),
-('E004', 82000.00, 'Bi-weekly'),
-('E005', 110000.00, 'Monthly'),
-('E006', 76000.00, 'Bi-weekly'),
-('E007', 125000.00, 'Monthly'),
-('E008', 85000.00, 'Bi-weekly');
+-- Payment
+INSERT INTO Payment (paymentID, paymentDate, amount, currency, paymentMethod, status, customerID) 
+VALUES 
+  (1, DATE '2023-01-10', 99.99, 'USD', 'Credit Card', 'Completed', 1),
+  (2, DATE '2023-01-12', 49.99, 'USD', 'PayPal', 'Pending', 2),
+  (3, DATE '2023-01-15', 129.99, 'USD', 'Debit Card', 'Completed', 3);
 
--- Insert data into the EmployeeType table
-INSERT INTO EmployeeType (EmployeeID, Type) VALUES
-('E001', 'Manager'),
-('E002', 'Subordinate'),
-('E003', 'Subordinate'),
-('E004', 'Subordinate'),
-('E005', 'Manager'),
-('E006', 'Subordinate'),
-('E007', 'Manager'),
-('E008', 'Subordinate');
+-- Profile
+INSERT INTO Profile (profileName, profilePicture, isOnline, profileID, WatchHistoryID, customerID) 
+VALUES 
+  ('Yair_Profile', 'image1.jpg', TRUE, 1, 1, 1),
+  ('Dana_Profile', 'image2.jpg', FALSE, 2, 2, 2),
+  ('Avi_Profile', 'image3.jpg', TRUE, 3, 3, 3);
+
+-- Reviews
+INSERT INTO Reviews (rating, movieID, comment, reviewDate, profileID) 
+VALUES 
+  (5, 101, 'Amazing movie!', DATE '2023-04-01', 1),
+  (4, 102, 'Very good, but a bit long.', DATE '2023-04-02', 2),
+  (3, 103, 'It was okay, not my favorite.', DATE '2023-04-03', 3);
+
+-- MarksAsFavorite
+INSERT INTO MarksAsFavorite (profileID, movieID) 
+VALUES 
+  (1, 101),
+  (2, 102),
+  (3, 103);

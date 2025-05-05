@@ -1,4 +1,4 @@
-CREATE TABLE customer
+CREATE TABLE Customer
 (
   firstName VARCHAR NOT NULL,
   lastName VARCHAR NOT NULL,

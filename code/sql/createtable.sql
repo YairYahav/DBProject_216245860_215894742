@@ -76,7 +76,7 @@ CREATE TABLE Reviews
 CREATE TABLE MarksAsFavorite
 (
   profileID INT NOT NULL,
-  movieID DATE NOT NULL,
+  movieID INT NOT NULL,
   PRIMARY KEY (profileID, movieID),
   FOREIGN KEY (profileID) REFERENCES Profile(profileID),
   FOREIGN KEY (movieID) REFERENCES Favorites(movieID)

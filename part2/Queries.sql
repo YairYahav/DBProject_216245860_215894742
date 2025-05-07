@@ -1,166 +1,95 @@
+-- Queries.sql
 
--- SELECT 1
-SELECT 
-    C.Customer_First_Name, 
-    C.Customer_Last_Name, 
-    COUNT(D.document_id) AS ValidDocuments
-FROM 
-    Customer C
-JOIN 
-    CustomerDocument D ON C.CustomerID = D.customer_id
-WHERE 
-    D.expiry_date > CURRENT_DATE
-GROUP BY 
-    C.CustomerID;
 
--- SELECT 2
-SELECT 
-    C.Customer_First_Name, 
-    C.Customer_Last_Name,
-    A.street_address, 
-    A.city_name
-FROM 
-    Customer C
-JOIN 
-    Address A ON C.CustomerID = A.customer_id
-WHERE 
-    A.is_primary = TRUE
-    AND EXTRACT(YEAR FROM C.customer_since) = EXTRACT(YEAR FROM CURRENT_DATE);
+-- Select:
 
--- SELECT 3
-SELECT 
-    C.CustomerID, 
-    C.Customer_First_Name, 
-    C.Customer_Last_Name, 
-    COUNT(N.note_id) AS ImportantNotes
-FROM 
-    Customer C
-JOIN 
-    CustomerNote N ON C.CustomerID = N.customer_id
-WHERE 
-    N.is_important = TRUE
-GROUP BY 
-    C.CustomerID
-HAVING 
-    COUNT(N.note_id) > 1;
+-- 1. כל הפרופילים עם היסטוריית צפייה ב-2024, כולל שם הלקוח
+SELECT p.profileName, p.isOnline, c.firstName, c.lastName, EXTRACT(YEAR FROM w.watchDate) AS watchYear
+FROM Profile p
+JOIN WatchHistory w ON p.WatchHistoryID = w.WatchHistoryID
+JOIN Customer c ON p.customerID = c.customerID
+WHERE EXTRACT(YEAR FROM w.watchDate) = 2024;
 
--- SELECT 4
-SELECT 
-    C.Customer_First_Name, 
-    C.Customer_Last_Name,
-    CT.contact_type, 
-    CT.contact_value
-FROM 
-    Customer C
-JOIN 
-    Contact CT ON C.CustomerID = CT.customer_id
-WHERE 
-    CT.is_primary = TRUE
-ORDER BY 
-    CT.contact_type;
+-- 2. ממוצע זמן צפייה לסרטים מועדפים (Favorites)
+SELECT f.movieID, AVG(f.totalTimeWatched) AS avgTimeWatched
+FROM Favorites f
+GROUP BY f.movieID
+ORDER BY avgTimeWatched DESC;
 
--- SELECT 5
-SELECT 
-    C.CustomerID, 
-    C.Customer_First_Name, 
-    C.Customer_Last_Name
-FROM 
-    Customer C
-LEFT JOIN 
-    Address A ON C.CustomerID = A.customer_id
-WHERE 
-    A.customer_id IS NULL;
+-- 3. פרטי תשלום של לקוחות ששילמו מעל 200 ש"ח בשנה האחרונה
+SELECT c.firstName, c.lastName, p.paymentDate, p.amount, p.currency
+FROM Payment p
+JOIN Customer c ON p.customerID = c.customerID
+WHERE p.amount > 200 AND EXTRACT(YEAR FROM p.paymentDate) = EXTRACT(YEAR FROM CURRENT_DATE);
 
--- SELECT 6
-SELECT 
-    S.segment_name, 
-    ROUND(AVG(EXTRACT(YEAR FROM AGE(C.date_of_birth))), 1) AS avg_age
-FROM 
-    CustomerSegmentAssignment A
-JOIN 
-    Customer C ON C.CustomerID = A.customer_id
-JOIN 
-    CustomerSegment S ON S.segment_id = A.segment_id
-GROUP BY 
-    S.segment_name;
+-- 4. לקוחות עם יותר משני מכשירים רשומים
+SELECT c.customerID, c.firstName, c.lastName, COUNT(d.deviceID) AS deviceCount
+FROM Customer c
+JOIN Devices d ON c.customerID = d.customerID
+GROUP BY c.customerID
+HAVING COUNT(d.deviceID) > 2;
 
--- SELECT 7
-SELECT 
-    C.CustomerID, 
-    C.Customer_First_Name, 
-    C.Customer_Last_Name,
-    D.document_type, 
-    D.expiry_date
-FROM 
-    Customer C
-JOIN 
-    CustomerDocument D ON C.CustomerID = D.customer_id
-WHERE 
-    D.expiry_date < CURRENT_DATE - INTERVAL '1 year';
+-- 5. רשימת פרופילים שהוסיפו סרט מועדף שדורג פחות מ-3
+SELECT p.profileName, r.rating, r.comment
+FROM MarksAsFavorite m
+JOIN Reviews r ON m.movieID = r.movieID
+JOIN Profile p ON m.profileID = p.profileID
+WHERE r.rating < 3;
 
--- SELECT 8
-SELECT 
-    EXTRACT(MONTH FROM customer_since) AS month, 
-    COUNT(*) AS customer_count
-FROM 
-    Customer
-GROUP BY 
-    EXTRACT(MONTH FROM customer_since)
-ORDER BY 
-    month;
+-- 6. כל הסרטים שנצפו באוקטובר כולל כמה זמן נצפו
+SELECT w.movieID, w.watchDate, w.durationWatched
+FROM WatchHistory w
+WHERE EXTRACT(MONTH FROM w.watchDate) = 10;
 
--- DELETE 1
-DELETE FROM Customer
-WHERE CustomerID NOT IN (
-    SELECT customer_id FROM CustomerSegmentAssignment
+-- 7. פרטי לקוחות שלא ביצעו אף תשלום השנה
+SELECT c.customerID, c.firstName, c.lastName
+FROM Customer c
+WHERE c.customerID NOT IN (
+  SELECT p.customerID FROM Payment p WHERE EXTRACT(YEAR FROM p.paymentDate) = EXTRACT(YEAR FROM CURRENT_DATE)
 );
 
--- DELETE 2
-DELETE FROM Address
-WHERE is_primary = FALSE AND country != 'Israel';
+-- 8. ממוצע זמני צפייה לפי חודש
+SELECT EXTRACT(MONTH FROM w.watchDate) AS month, AVG(w.durationWatched) AS avgDuration
+FROM WatchHistory w
+GROUP BY month
+ORDER BY month;
 
--- DELETE 3
-DELETE FROM CustomerDocument
-WHERE expiry_date < CURRENT_DATE - INTERVAL '5 years';
 
--- UPDATE 1
-UPDATE CustomerNote
-SET is_important = TRUE
-WHERE customer_id IN (
-    SELECT CustomerID FROM Customer 
-    WHERE EXTRACT(YEAR FROM AGE(date_of_birth)) > 65
+
+-- Delete:
+
+-- 1. מחיקת פרופילים לא פעילים מעל שנה (לפי היסטוריית צפייה)
+DELETE FROM Profile
+WHERE WatchHistoryID IN (
+  SELECT w.WatchHistoryID FROM WatchHistory w
+  WHERE w.watchDate < CURRENT_DATE - INTERVAL '1 year'
 );
 
--- UPDATE 2
-UPDATE CustomerDocument
-SET verification_status = FALSE
-WHERE expiry_date < CURRENT_DATE;
+-- 2. מחיקת מכשירים שלא נראו מעל שנתיים
+DELETE FROM Devices
+WHERE lastSeen < CURRENT_DATE - INTERVAL '2 years';
 
--- UPDATE 3
-UPDATE CustomerSegmentAssignment
-SET segment_id = (
-    SELECT segment_id FROM CustomerSegment WHERE segment_name = 'Premium'
-)
-WHERE customer_id IN (
-    SELECT customer_id FROM CustomerDocument
-    WHERE expiry_date > CURRENT_DATE
-    GROUP BY customer_id
-    HAVING COUNT(document_id) > 3
-);
+-- 3. מחיקת תשלומים שנכשלו
+DELETE FROM Payment
+WHERE status = 'Failed transaction';
 
--- ROLLBACK example
-BEGIN;
-UPDATE CustomerNote
-SET note_text = 'בדיקה זמנית'
-WHERE is_important = TRUE;
-SELECT * FROM CustomerNote WHERE is_important = TRUE;
-ROLLBACK;
 
--- COMMIT example
-BEGIN;
-UPDATE CustomerNote
-SET note_text = 'עודכנה על ידי מערכת'
-WHERE is_important = TRUE;
-SELECT * FROM CustomerNote WHERE is_important = TRUE;
-COMMIT;
-SELECT * FROM CustomerNote WHERE is_important = TRUE;
+
+--- Update:
+
+-- 1. עדכון סטטוס תשלום ישן ל"הושלם"
+UPDATE Payment
+SET status = 'Payment succussed'
+WHERE paymentDate < CURRENT_DATE - INTERVAL '6 months' AND status != 'Payment succussed';
+
+-- 2. עדכון תמונת פרופיל למשתמשים שאין להם תמונה
+UPDATE Profile
+SET profilePicture = 'default.jpg'
+WHERE profilePicture IS NULL OR profilePicture = '';
+
+-- 3. העלאת דירוג ל-5 אם התגובה חיובית
+UPDATE Reviews
+SET rating = 5
+WHERE comment ILIKE '%amazing%' AND rating < 5;
+
+

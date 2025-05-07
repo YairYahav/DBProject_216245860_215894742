@@ -1,17 +1,30 @@
-
 -- ROLLBACK example
+
 BEGIN;
-UPDATE CustomerNote
-SET note_text = 'בדיקה זמנית'
-WHERE is_important = TRUE;
-SELECT * FROM CustomerNote WHERE is_important = TRUE;
+
+-- עדכון תאריך תשלום
+UPDATE Payment
+SET paymentDate = CURRENT_DATE
+WHERE paymentID = 101;
+
+-- בדיקה
+SELECT * FROM Payment WHERE paymentID = 101;
+
 ROLLBACK;
 
--- COMMIT example
+-- בדיקה אחרי rollback
+SELECT * FROM Payment WHERE paymentID = 101;
+
+-- שוב עדכון
 BEGIN;
-UPDATE CustomerNote
-SET note_text = 'עודכנה על ידי מערכת'
-WHERE is_important = TRUE;
-SELECT * FROM CustomerNote WHERE is_important = TRUE;
+UPDATE Payment
+SET paymentDate = CURRENT_DATE
+WHERE paymentID = 101;
+
+-- בדיקה
+SELECT * FROM Payment WHERE paymentID = 101;
+
 COMMIT;
-SELECT * FROM CustomerNote WHERE is_important = TRUE;
+
+-- בדיקה אחרי commit
+SELECT * FROM Payment WHERE paymentID = 101;

@@ -527,11 +527,12 @@ By the end of this workshop, you should be able to:
    #### After:
    > ![After_Not_Updated_For_one_Years_Removal](images/queries/after_one_years.png)
 
-### 2. **Remove contact records that are duplicates and not marked as primary**
+### 2. **Deleting devices that have not been seen for over two years**
    #### Before:
-   > ![Before_Non_Primary_Duplicate_Contact_Records_Removal](images/queries/before_duplicates.jpg)
+   > ![Before_Not_Seen_For_Two_Years_Removal](images/queries/before_two_years.png)
    #### After:
-   > ![After_Non_Primary_Duplicate_Contact_Records_Removal](images/queries/after_duplicates.jpg)
+   > ![After_Not_Seen_For_Two_Years_Removal](images/queries/after_two_years.png)
+   (In the Mockaroo we put only devices in range less then 2 year but we checked and it's work)
 
 ### 3. **Remove all non-primary addresses that are outside of China**
    #### Before:

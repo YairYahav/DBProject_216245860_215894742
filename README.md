@@ -490,6 +490,102 @@ By the end of this workshop, you should be able to:
 
 ---
 
+# Queries
+
+### 1. **Query to show all customers who have valid docs**
+   > ![Valid Docs](images/queries/valid_docs.jpg)
+
+### 2. **Query to show addresses of everyone who joined this year**
+   > ![Current_Year](images/queries/current_year.jpg)
+
+### 3. **Query to show all customers who sent in an important report or complaint**
+   > ![Important_Report_Or_Complaint](images/queries/important_report_or_complaint.jpg)
+
+### 4. **Query to show average customer age for each segment**
+   > ![Average_Age_Per_Segment](images/queries/avg_age_per_segment.jpg)
+
+### 5. **Query to show all customers whose documents expired more than a year ago**
+   > ![Expired_Over_Year_ago](images/queries/expired_over_year_ago.jpg)
+
+### 6. **Query to show how many customers signed up in each month**
+   > ![Signed_Up_Per_Month](images/queries/signed_up_per_month.jpg)
+
+### 7. **Query to show all customers who live in Longmen**
+   > ![Live_In_Longmen](images/queries/live_in_longmen.jpg)
+
+### 8. **Query to show primary contact info sorted by type**
+   > ![Primary_Contact_Info](images/queries/primary_contact.jpg)
+
+
+---
+
+# Deletions
+
+### 1. **Remove customers who haven't been updated in over 3 years and have expired documents**
+   #### Before:
+   > ![Before_Not_Updated_For_3_Years_Removal](images/queries/before_3_years.jpg)
+   #### After:
+   > ![After_Not_Updated_For_3_Years_Removal](images/queries/after_3_years.jpg)
+
+### 2. **Remove contact records that are duplicates and not marked as primary**
+   #### Before:
+   > ![Before_Non_Primary_Duplicate_Contact_Records_Removal](images/queries/before_duplicates.jpg)
+   #### After:
+   > ![After_Non_Primary_Duplicate_Contact_Records_Removal](images/queries/after_duplicates.jpg)
+
+### 3. **Remove all non-primary addresses that are outside of China**
+   #### Before:
+   > ![Before_Non_Primary_And_Non_Chinese_Removal](images/queries/before_china.jpg)
+   #### After:
+   > ![Before_Non_Primary_And_Non_Chinese_Removal](images/queries/after_china.jpg)
+
+# Updates
+
+### 1. **Update all notes of customers over 65 to important**
+   #### Before:
+   > ![Before_Updated_Notes_For_Over_65](images/queries/before_65.jpg)
+   #### After:
+   > ![After_Updated_Notes_For_Over_65](images/queries/after_65.jpg)
+
+### 2. **Update all expired documents to be unverified**
+   #### Before:
+   > ![Before_Expired_Docs_Marked_Unverified](images/queries/before_expired.jpg)
+   #### After:
+   > ![After_Expired_Docs_Marked_Unverified](images/queries/after_expired.jpg)
+
+### 3. **Promote all customers whose documents are valid and verified and of type img/gif**
+   #### Before:
+   > ![Before_Verified_Img/Gif_Promoted_Part_1](images/queries/before_promotion1.jpg)
+   > ![Before_Verified_Img/Gif_Promoted_Part_2](images/queries/before_promotion2.jpg)
+   #### After:
+   > ![After_Verified_Img/Gif_Promoted](images/queries/after_promotion.jpg)
+
+# Rollback
+
+   #### Mid Rollback:
+   > ![Mid_Rollback](images/queries/before_rollback.jpg)
+   #### After Rollback:
+   > ![After_Rollback](images/queries/after_rollback.jpg)
+
+# Commit
+   #### Before:
+   > ![Before_Commit](images/queries/before_commit.jpg)
+   #### After:
+   > ![After_Commit](images/queries/after_commit.jpg)
+
+# Constraints
+### 1. **All customers date of birth has to be before today**
+   > ![Date_of_birth_must_be_before_today](images/queries/dob_before_today.jpg)
+
+### 2. **Sets default address to home if none provided**
+   > ![Set_Default_Address_As_Home](images/queries/default_address.jpg)
+
+### 3. **Ensure every contact has not null email or phone**
+   > ![Not_Null_Email_Or_Phone](images/queries/not_null_contact_info.jpg)
+
+
+---
+
 
 ## 👇 Resources
 

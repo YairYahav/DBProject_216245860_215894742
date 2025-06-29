@@ -557,9 +557,8 @@ By the end of this workshop, you should be able to:
 ### 3. **Upgrading to 5 if the response is positive**
    #### Before:
    > ![Before_Upgrading_To_5](images/queries/before_5.png)
-   > ![After_Upgrading_To_5](images/queries/after_5.png)
    #### After:
-   > ![After_Verified_Img/Gif_Promoted](images/queries/after_promotion.jpg)
+   > ![After_Upgrading_To_5](images/queries/after_5.png)
 
 # Rollback
 

@@ -492,40 +492,40 @@ By the end of this workshop, you should be able to:
 
 # Queries
 
-### 1. **Query to show all customers who have valid docs**
-   > ![Valid Docs](images/queries/valid_docs.jpg)
+### 1. **All profiles with viewing history in 2024, including the client's name**
+   > ![Viewing_History_2024](images/queries/viewing_history_2024.png)
 
-### 2. **Query to show addresses of everyone who joined this year**
-   > ![Current_Year](images/queries/current_year.jpg)
+### 2. **Average viewing time for favorite movies (Favorites)**
+   > ![Favorites_Avg](images/queries/favorites_avg.png)
 
-### 3. **Query to show all customers who sent in an important report or complaint**
-   > ![Important_Report_Or_Complaint](images/queries/important_report_or_complaint.jpg)
+### 3. **Payment details of customers who paid over 200 NIS in the last year**
+   > ![Paid_Over_200](images/queries/paid_over_200.png)
 
-### 4. **Query to show average customer age for each segment**
-   > ![Average_Age_Per_Segment](images/queries/avg_age_per_segment.jpg)
+### 4. **Customers with more than two registered devices**
+   > ![More_Than_Two_Devices](images/queries/more_than_two_devices.png)
 
-### 5. **Query to show all customers whose documents expired more than a year ago**
-   > ![Expired_Over_Year_ago](images/queries/expired_over_year_ago.jpg)
+### 5. **List of profiles that added a favorite movie rated less than 3**
+   > ![Low_Rated_Fav_Movie](images/queries/low_rated_fav_movie.png)
 
-### 6. **Query to show how many customers signed up in each month**
-   > ![Signed_Up_Per_Month](images/queries/signed_up_per_month.jpg)
+### 6. **All movies watched in October including how long they were watched**
+   > ![October_Watched_Movies](images/queries/october_watched_movies.png)
 
-### 7. **Query to show all customers who live in Longmen**
-   > ![Live_In_Longmen](images/queries/live_in_longmen.jpg)
+### 7. **Details of customers who have not made any payments this year**
+   > ![Did_Not_Buy](images/queries/did_not_buy.png)
 
-### 8. **Query to show primary contact info sorted by type**
-   > ![Primary_Contact_Info](images/queries/primary_contact.jpg)
+### 8. **Average viewing times by month**
+   > ![Avg_Viewing_Time](images/queries/avg_viewing_time.png)
 
 
 ---
 
 # Deletions
 
-### 1. **Remove customers who haven't been updated in over 3 years and have expired documents**
+### 1. **Deleting profiles inactive for over a year (based on viewing history)**
    #### Before:
-   > ![Before_Not_Updated_For_3_Years_Removal](images/queries/before_3_years.jpg)
+   > ![Before_Not_Updated_For_one_Years_Removal](images/queries/before_one_year.png)
    #### After:
-   > ![After_Not_Updated_For_3_Years_Removal](images/queries/after_3_years.jpg)
+   > ![After_Not_Updated_For_one_Years_Removal](images/queries/after_one_years.png)
 
 ### 2. **Remove contact records that are duplicates and not marked as primary**
    #### Before:

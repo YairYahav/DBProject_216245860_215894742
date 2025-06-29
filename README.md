@@ -156,83 +156,83 @@ images/erd/one.jpg
    - Translated the ERD into actual tables, defining columns, data types, primary keys, and foreign keys.
    - Utilized SQL commands for table creation.
 
-1. Customer Table
-Purpose: Central entity storing customer information for the streaming service platform.
-Attributes and their purposes:
+### 1. Customer Table
+**Purpose:** Central entity storing customer information for the streaming service platform.
+**Attributes and their purposes:**
 
-customerID (INT PRIMARY KEY): Unique identifier for each customer
-firstName (VARCHAR): Customer's first name
-lastName (VARCHAR): Customer's last name
-dateOfBirth (DATE): For age verification and parental controls
-customerSince (DATE): Account creation date for loyalty tracking
+- `customerID (INT PRIMARY KEY)`: Unique identifier for each customer
+- `firstName (VARCHAR)`: Customer's first name
+- `lastName (VARCHAR)`: Customer's last name
+- `dateOfBirth (DATE)`: For age verification and parental controls
+- `customerSince (DATE)`: Account creation date for loyalty tracking
 
-2. Devices Table
-Purpose: Manages multiple viewing devices per customer (TV, phone, tablet, etc.).
-Attributes and their purposes:
+### 2. Devices Table
+**Purpose:** Manages multiple viewing devices per customer (TV, phone, tablet, etc.).
+**Attributes and their purposes:**
 
-deviceID (INT PRIMARY KEY): Unique device identifier
-deviceName (VARCHAR): Human-readable device name
-deviceType (VARCHAR): Type of device (iOS, Android, Smart TV, etc.)
-lastSeen (DATE): Last activity for security monitoring
-customerID (INT, FOREIGN KEY): Links device to customer
+- `deviceID (INT PRIMARY KEY)`: Unique device identifier
+- `deviceName (VARCHAR)`: Human-readable device name
+- `deviceType (VARCHAR)`: Type of device (iOS, Android, Smart TV, etc.)
+- `lastSeen (DATE)`: Last activity for security monitoring
+- `customerID (INT, FOREIGN KEY)`: Links device to customer
 
-3. WatchHistory Table
-Purpose: Tracks viewing history for recommendations and analytics.
-Attributes and their purposes:
+### 3. WatchHistory Table
+**Purpose:** Tracks viewing history for recommendations and analytics.
+**Attributes and their purposes:**
 
-WatchHistoryID (INT PRIMARY KEY): Unique record identifier
-movieID (INT): Reference to content watched
-watchDate (DATE): When content was viewed
-durationWatched (FLOAT): Minutes watched for completion tracking
+- `WatchHistoryID (INT PRIMARY KEY)`: Unique record identifier
+- `movieID (INT)`: Reference to content watched
+- `watchDate (DATE)`: When content was viewed
+- `durationWatched (FLOAT)`: Minutes watched for completion tracking
 
-4. Favorites Table
-Purpose: Stores user's favorite content for quick access.
-Attributes and their purposes:
+### 4. Favorites Table
+**Purpose:** Stores user's favorite content for quick access.
+**Attributes and their purposes:**
 
-movieID (INT PRIMARY KEY): Unique content identifier
-lastSeen (DATE): Last time marked as favorite
-totalTimeWatched (FLOAT): Total viewing time for this content
+- `movieID (INT PRIMARY KEY)`: Unique content identifier
+- `lastSeen (DATE)`: Last time marked as favorite
+- `totalTimeWatched (FLOAT)`: Total viewing time for this content
 
-5. Payment Table
-Purpose: Manages subscription payments and billing history.
-Attributes and their purposes:
+### 5. Payment Table
+**Purpose:** Manages subscription payments and billing history.
+**Attributes and their purposes:**
 
-paymentID (INT PRIMARY KEY): Unique payment identifier
-paymentDate (DATE): When payment was processed
-amount (FLOAT): Payment amount
-currency (VARCHAR): Currency type (USD, EUR, etc.)
-paymentMethod (VARCHAR): Payment method used
-status (VARCHAR): Payment status (Completed, Pending, Failed)
-customerID (INT, FOREIGN KEY): Links payment to customer
+- `paymentID (INT PRIMARY KEY)`: Unique payment identifier
+- `paymentDate (DATE)`: When payment was processed
+- `amount (FLOAT)`: Payment amount
+- `currency (VARCHAR)`: Currency type (USD, EUR, etc.)
+- `paymentMethod (VARCHAR)`: Payment method used
+- `status (VARCHAR)`: Payment status (Completed, Pending, Failed)
+- `customerID (INT, FOREIGN KEY)`: Links payment to customer
 
-6. Profile Table
-Purpose: Manages multiple viewing profiles per customer account (family members).
-Attributes and their purposes:
+### 6. Profile Table
+**Purpose:** Manages multiple viewing profiles per customer account (family members).
+**Attributes and their purposes:**
 
-profileID (INT PRIMARY KEY): Unique profile identifier
-profileName (VARCHAR): Display name for profile
-profilePicture (VARCHAR): Avatar image path
-isOnline (BOOL): Current online status
-WatchHistoryID (INT, FOREIGN KEY): Links to viewing history
-customerID (INT, FOREIGN KEY): Links profile to customer
+- `profileID (INT PRIMARY KEY)`: Unique profile identifier
+- `profileName (VARCHAR)`: Display name for profile
+- `profilePicture (VARCHAR)`: Avatar image path
+- `isOnline (BOOL)`: Current online status
+- `WatchHistoryID (INT, FOREIGN KEY)`: Links to viewing history
+- `customerID (INT, FOREIGN KEY)`: Links profile to customer
 
-7. Reviews Table
-Purpose: Stores user reviews and ratings for content.
-Attributes and their purposes:
+### 7. Reviews Table
+**Purpose:** Stores user reviews and ratings for content.
+**Attributes and their purposes:**
 
-movieID (INT PRIMARY KEY): Content being reviewed
-rating (INT): Star rating (1-5)
-comment (VARCHAR): Written review text
-reviewDate (DATE): When review was submitted
-profileID (INT, FOREIGN KEY): Links review to profile
+- `movieID (INT PRIMARY KEY)`: Content being reviewed
+- `rating (INT)`: Star rating (1-5)
+- `comment (VARCHAR)`: Written review text
+- `reviewDate (DATE)`: When review was submitted
+- `profileID (INT, FOREIGN KEY)`: Links review to profile
 
-8. MarksAsFavorite Table
-Purpose: Junction table linking profiles to their favorite content.
-Attributes and their purposes:
+### 8. MarksAsFavorite Table
+**Purpose:** Junction table linking profiles to their favorite content.
+**Attributes and their purposes:**
 
-profileID (INT, FOREIGN KEY): Profile marking favorite
-movieID (INT, FOREIGN KEY): Content marked as favorite
-Composite primary key (profileID, movieID)
+- `profileID (INT, FOREIGN KEY)`: Profile marking favorite
+- `movieID (INT, FOREIGN KEY)`: Content marked as favorite
+- `Composite primary key (profileID, movieID)`
 
 
      code/sql/createtable.sql

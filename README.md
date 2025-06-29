@@ -232,7 +232,7 @@ images/erd/one.jpg
 
 - `profileID (INT, FOREIGN KEY)`: Profile marking favorite
 - `movieID (INT, FOREIGN KEY)`: Content marked as favorite
-- `Composite primary key (profileID, movieID)`
+- Composite primary key (profileID, movieID)
 
 
      code/sql/createtable.sql

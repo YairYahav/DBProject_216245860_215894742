@@ -534,30 +534,30 @@ By the end of this workshop, you should be able to:
    > ![After_Not_Seen_For_Two_Years_Removal](images/queries/after_two_years.png)
    (In the Mockaroo we put only devices in range less then 2 year but we checked and it's work)
 
-### 3. **Remove all non-primary addresses that are outside of China**
+### 3. **Deleting failed payments**
    #### Before:
-   > ![Before_Non_Primary_And_Non_Chinese_Removal](images/queries/before_china.jpg)
+   > ![Before_Failed_Payments_Delete](images/queries/before_failed_payments_delete.png)
    #### After:
-   > ![Before_Non_Primary_And_Non_Chinese_Removal](images/queries/after_china.jpg)
+   > ![After_Failed_Payments_Delete](images/queries/after_failed_payments_delete.png)
 
 # Updates
 
-### 1. **Update all notes of customers over 65 to important**
+### 1. **Updating an old payment status to "Completed"**
    #### Before:
-   > ![Before_Updated_Notes_For_Over_65](images/queries/before_65.jpg)
+   > ![Before_Updated_Payments_To_Completed](images/queries/before_completed.png)
    #### After:
-   > ![After_Updated_Notes_For_Over_65](images/queries/after_65.jpg)
+   > ![After_Updated_Payments_To_Completed](images/queries/after_completed.png)
 
-### 2. **Update all expired documents to be unverified**
+### 2. **Update profile picture for users who don't have a picture**
    #### Before:
-   > ![Before_Expired_Docs_Marked_Unverified](images/queries/before_expired.jpg)
+   > ![Before_Adding_Default_pictures](images/queries/before_default_pictures.png)
    #### After:
-   > ![After_Expired_Docs_Marked_Unverified](images/queries/after_expired.jpg)
+   > ![After_Adding_Default_pictures](images/queries/after_default_pictures.png)
 
-### 3. **Promote all customers whose documents are valid and verified and of type img/gif**
+### 3. **Upgrading to 5 if the response is positive**
    #### Before:
-   > ![Before_Verified_Img/Gif_Promoted_Part_1](images/queries/before_promotion1.jpg)
-   > ![Before_Verified_Img/Gif_Promoted_Part_2](images/queries/before_promotion2.jpg)
+   > ![Before_Upgrading_To_5](images/queries/before_5.png)
+   > ![After_Upgrading_To_5](images/queries/after_5.png)
    #### After:
    > ![After_Verified_Img/Gif_Promoted](images/queries/after_promotion.jpg)
 

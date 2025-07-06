@@ -567,12 +567,6 @@ By the end of this workshop, you should be able to:
    #### After Rollback:
    > ![After_Rollback](images/queries/after_rollback.png)
 
-# Commit
-   #### Before:
-   > ![Before_Commit](images/queries/before_commit.jpg)
-   #### After:
-   > ![After_Commit](images/queries/after_commit.jpg)
-
 # Constraints
 ### 1. **All anount of payment can not be negetive**
    > ![Positive_Anount](images/queries/positive_amount.png)
@@ -612,29 +606,31 @@ By the end of this workshop, you should be able to:
 
 
 
+### The database is populated correctly 
+> ![Data_Base](part3/database_populated.png)
 
 #### Alter Table
 -The alter table works as you could see in the picture below:
 > ![Alter_Table](part3/alterTableWorks.png)
 
 #### View 1
-> ![view1](part3/view1.png)
+> ![view1](part3/viewImages/view1.png)
 
-#### Query 1
-> ![query1](part3/query1.png)
+#### Query 1.1
+> ![query11](part3/viewImages/query11.png)
 
--As you could see below Query 1 gives us lots of results:
-> ![query1Count](part3/query1Count.png)
+### Query 1.2
+> ![query12](part3/viewImages/query12.png)
 
 #### View 2
-> ![view2](part3/view2.png)
+> ![view2](part3/viewImages/view2.png)
 
-#### Query 2
-> ![view1](part3/query2.png)
+#### Query 2.1
+> ![query21](part3/viewImages/query21.png)
 
 
-#### Query 3
-> ![view1](part3/query3.png)
+#### Query 2.2
+> ![query22](part3/viewImages/query22.png)
 
 ---
 

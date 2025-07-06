@@ -563,9 +563,9 @@ By the end of this workshop, you should be able to:
 # Rollback
 
    #### Mid Rollback:
-   > ![Mid_Rollback](images/queries/before_rollback.jpg)
+   > ![Mid_Rollback](images/queries/before_rollback.png)
    #### After Rollback:
-   > ![After_Rollback](images/queries/after_rollback.jpg)
+   > ![After_Rollback](images/queries/after_rollback.png)
 
 # Commit
    #### Before:
@@ -574,19 +574,44 @@ By the end of this workshop, you should be able to:
    > ![After_Commit](images/queries/after_commit.jpg)
 
 # Constraints
-### 1. **All customers date of birth has to be before today**
-   > ![Date_of_birth_must_be_before_today](images/queries/dob_before_today.jpg)
+### 1. **All anount of payment can not be negetive**
+   > ![Positive_Anount](images/queries/positive_amount.png)
 
-### 2. **Sets default address to home if none provided**
-   > ![Set_Default_Address_As_Home](images/queries/default_address.jpg)
+### 2. **Status of payment had to be from a specific list**
+   > ![Formal_Payment_Status](images/queries/formal_payment_status.png)
 
-### 3. **Ensure every contact has not null email or phone**
-   > ![Not_Null_Email_Or_Phone](images/queries/not_null_contact_info.jpg)
+### 3. **Ensure every profile have a defult picture**
+   > ![Not_Null_Picture](images/queries/not_null_picture.png)
 
 
 ---
 
 
+### שלב ג' - אינטגרציה ומבטים
+בשלב זה ביצענו אינטגרציה של מערכת ניהול התוכן שלנו (אגף תוכן וסוגי מדיה) עם מערכת ניהול יוצרים והפקות. התהליך כלל הנדוס לאחור, יצירת מודל נתונים משולב, שינוי סכמת בסיס הנתונים הקיים והגדרת מבטים (Views) לניתוח הנתונים המאוחדים.
+
+### הנדוס לאחור: המערכת הנוספת
+קיבלנו גיבוי של בסיס נתונים של אגף ניהול יוצרים, סוכנים, חוזים והפקות. ביצענו הנדוס לאחור כדי להבין את מבנה הנתונים שלו.
+
+### תרשים DSD של המערכת הנוספת
+> ![Their_DSD](images/theirs/their_dsd.png)
+### תרשים ERD של המערכת הנוספת
+> ![Their_DSD](images/theirs/their_erd.png)
+
+### תהליך האינטגרציה
+תהליך האינטגרציה התמקד במיזוג טבלת Production ממערכת היוצרים לתוך טבלת Title הקיימת במערכת שלנו, כדי ליצור ישות מרכזית ואחידה לכלל התכנים.
+
+
+#### Integrated ERD
+> ![Integrated_ERD](images/integrated/integrated_erd.png)
+
+#### Integrated DSD
+> ![Integrated_DSD](images/integrated/integrated_dsd.png)
+
+
+
+
+---
 ## 👇 Resources
 
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)

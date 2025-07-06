@@ -3,6 +3,7 @@ Database Connection Manager for Streaming Service
 מנהל חיבור בסיס נתונים למערכת סטרימינג
 
 Handles PostgreSQL connections, queries, and error management
+Enhanced version with support for all tables from the integrated system
 """
 
 import psycopg2
@@ -17,6 +18,7 @@ from contextlib import contextmanager
 class DatabaseManager:
     """
     Database manager class for PostgreSQL operations
+    Enhanced with support for all streaming service tables including integrated content management
     """
     
     def __init__(self):
@@ -436,6 +438,262 @@ class DatabaseManager:
         query = "DELETE FROM WatchHistory WHERE WatchHistoryID = %s"
         return self.execute_query(query, (watch_id,), fetch=False)
     
+    # CRUD Operations for Payment table
+    def get_payments(self, customer_id=None, limit=None):
+        """Get payments with optional filtering"""
+        query = """
+            SELECT p.paymentID, p.paymentDate, p.amount, p.currency,
+                   p.paymentMethod, p.status, p.customerID,
+                   c.firstName, c.lastName
+            FROM Payment p
+            JOIN Customer c ON p.customerID = c.customerID
+        """
+        params = []
+        
+        if customer_id:
+            query += " WHERE p.customerID = %s"
+            params.append(customer_id)
+        
+        query += " ORDER BY p.paymentDate DESC"
+        
+        if limit:
+            query += " LIMIT %s"
+            params.append(limit)
+        
+        return self.execute_query(query, params)
+    
+    def create_payment(self, payment_data):
+        """Create new payment record"""
+        query = """
+            INSERT INTO Payment (paymentID, paymentDate, amount, currency,
+                               paymentMethod, status, customerID)
+            VALUES (%(paymentID)s, %(paymentDate)s, %(amount)s, %(currency)s,
+                   %(paymentMethod)s, %(status)s, %(customerID)s)
+            RETURNING paymentID
+        """
+        result = self.execute_query(query, payment_data)
+        return result[0]['paymentid'] if result else None
+    
+    def update_payment(self, payment_id, payment_data):
+        """Update payment record"""
+        query = """
+            UPDATE Payment 
+            SET paymentDate = %(paymentDate)s, amount = %(amount)s,
+                currency = %(currency)s, paymentMethod = %(paymentMethod)s,
+                status = %(status)s
+            WHERE paymentID = %(paymentID)s
+        """
+        payment_data['paymentID'] = payment_id
+        return self.execute_query(query, payment_data, fetch=False)
+    
+    def delete_payment(self, payment_id):
+        """Delete payment record"""
+        query = "DELETE FROM Payment WHERE paymentID = %s"
+        return self.execute_query(query, (payment_id,), fetch=False)
+    
+    # CRUD Operations for Devices table
+    def get_devices(self, customer_id=None):
+        """Get devices with optional customer filtering"""
+        query = """
+            SELECT d.deviceID, d.deviceName, d.deviceType, d.lastSeen,
+                   d.customerID, c.firstName, c.lastName
+            FROM Devices d
+            JOIN Customer c ON d.customerID = c.customerID
+        """
+        params = []
+        
+        if customer_id:
+            query += " WHERE d.customerID = %s"
+            params.append(customer_id)
+        
+        query += " ORDER BY d.lastSeen DESC"
+        
+        return self.execute_query(query, params)
+    
+    def create_device(self, device_data):
+        """Create new device record"""
+        query = """
+            INSERT INTO Devices (deviceID, deviceName, deviceType, lastSeen, customerID)
+            VALUES (%(deviceID)s, %(deviceName)s, %(deviceType)s, %(lastSeen)s, %(customerID)s)
+            RETURNING deviceID
+        """
+        result = self.execute_query(query, device_data)
+        return result[0]['deviceid'] if result else None
+    
+    def update_device(self, device_id, device_data):
+        """Update device record"""
+        query = """
+            UPDATE Devices 
+            SET deviceName = %(deviceName)s, deviceType = %(deviceType)s,
+                lastSeen = %(lastSeen)s
+            WHERE deviceID = %(deviceID)s
+        """
+        device_data['deviceID'] = device_id
+        return self.execute_query(query, device_data, fetch=False)
+    
+    def delete_device(self, device_id):
+        """Delete device record"""
+        query = "DELETE FROM Devices WHERE deviceID = %s"
+        return self.execute_query(query, (device_id,), fetch=False)
+    
+    # CRUD Operations for Reviews table
+    def get_reviews(self, profile_id=None, movie_id=None):
+        """Get reviews with optional filtering"""
+        query = """
+            SELECT r.movieID, r.rating, r.comment, r.reviewDate, r.profileID,
+                   t.Title_Name, p.profileName, c.firstName, c.lastName
+            FROM Reviews r
+            LEFT JOIN Title t ON r.movieID = t.Title_ID
+            LEFT JOIN Profile p ON r.profileID = p.profileID
+            LEFT JOIN Customer c ON p.customerID = c.customerID
+        """
+        params = []
+        where_conditions = []
+        
+        if profile_id:
+            where_conditions.append("r.profileID = %s")
+            params.append(profile_id)
+        
+        if movie_id:
+            where_conditions.append("r.movieID = %s")
+            params.append(movie_id)
+        
+        if where_conditions:
+            query += " WHERE " + " AND ".join(where_conditions)
+        
+        query += " ORDER BY r.reviewDate DESC"
+        
+        return self.execute_query(query, params)
+    
+    def create_review(self, review_data):
+        """Create new review"""
+        query = """
+            INSERT INTO Reviews (movieID, rating, comment, reviewDate, profileID)
+            VALUES (%(movieID)s, %(rating)s, %(comment)s, %(reviewDate)s, %(profileID)s)
+            RETURNING movieID
+        """
+        result = self.execute_query(query, review_data)
+        return result[0]['movieid'] if result else None
+    
+    def update_review(self, movie_id, profile_id, review_data):
+        """Update review"""
+        query = """
+            UPDATE Reviews 
+            SET rating = %(rating)s, comment = %(comment)s, reviewDate = %(reviewDate)s
+            WHERE movieID = %(movieID)s AND profileID = %(profileID)s
+        """
+        review_data['movieID'] = movie_id
+        review_data['profileID'] = profile_id
+        return self.execute_query(query, review_data, fetch=False)
+    
+    def delete_review(self, movie_id, profile_id):
+        """Delete review"""
+        query = "DELETE FROM Reviews WHERE movieID = %s AND profileID = %s"
+        return self.execute_query(query, (movie_id, profile_id), fetch=False)
+    
+    # CRUD Operations for Favorites table
+    def get_favorites(self, profile_id=None):
+        """Get favorites with optional filtering"""
+        query = """
+            SELECT f.movieID, f.lastSeen, f.totalTimeWatched,
+                   t.Title_Name, maf.profileID, p.profileName
+            FROM Favorites f
+            LEFT JOIN Title t ON f.movieID = t.Title_ID
+            LEFT JOIN MarksAsFavorite maf ON f.movieID = maf.movieID
+            LEFT JOIN Profile p ON maf.profileID = p.profileID
+        """
+        params = []
+        
+        if profile_id:
+            query += " WHERE maf.profileID = %s"
+            params.append(profile_id)
+        
+        query += " ORDER BY f.lastSeen DESC"
+        
+        return self.execute_query(query, params)
+    
+    def create_favorite(self, favorite_data):
+        """Create new favorite record"""
+        query = """
+            INSERT INTO Favorites (movieID, lastSeen, totalTimeWatched)
+            VALUES (%(movieID)s, %(lastSeen)s, %(totalTimeWatched)s)
+            RETURNING movieID
+        """
+        result = self.execute_query(query, favorite_data)
+        return result[0]['movieid'] if result else None
+    
+    def update_favorite(self, movie_id, favorite_data):
+        """Update favorite record"""
+        query = """
+            UPDATE Favorites 
+            SET lastSeen = %(lastSeen)s, totalTimeWatched = %(totalTimeWatched)s
+            WHERE movieID = %(movieID)s
+        """
+        favorite_data['movieID'] = movie_id
+        return self.execute_query(query, favorite_data, fetch=False)
+    
+    def delete_favorite(self, movie_id):
+        """Delete favorite record"""
+        query = "DELETE FROM Favorites WHERE movieID = %s"
+        return self.execute_query(query, (movie_id,), fetch=False)
+    
+    # CRUD Operations for MarksAsFavorite table
+    def add_marks_as_favorite(self, profile_id, movie_id):
+        """Add marks as favorite relationship"""
+        query = """
+            INSERT INTO MarksAsFavorite (profileID, movieID)
+            VALUES (%s, %s)
+        """
+        return self.execute_query(query, (profile_id, movie_id), fetch=False)
+    
+    def remove_marks_as_favorite(self, profile_id, movie_id):
+        """Remove marks as favorite relationship"""
+        query = "DELETE FROM MarksAsFavorite WHERE profileID = %s AND movieID = %s"
+        return self.execute_query(query, (profile_id, movie_id), fetch=False)
+    
+    # Content Management Operations (from integrated system)
+    def get_titles(self, limit=None, search_term=None):
+        """Get titles/content from integrated content management system"""
+        query = """
+            SELECT t.Title_ID, t.Title_Name, t.Age_Rating,
+                   CASE 
+                       WHEN m.Title_ID IS NOT NULL THEN 'Movie'
+                       WHEN tv.Title_ID IS NOT NULL THEN 'TV Show'
+                       ELSE 'Unknown'
+                   END as content_type,
+                   COALESCE(m.Duration, 0) as duration,
+                   COALESCE(tv.number_of_seasons, 0) as seasons,
+                   f.Franchise_Name
+            FROM Title t
+            LEFT JOIN Movie m ON t.Title_ID = m.Title_ID
+            LEFT JOIN Tv_show tv ON t.Title_ID = tv.Title_ID
+            LEFT JOIN Belongs_to bt ON t.Title_ID = bt.Title_ID
+            LEFT JOIN Franchise f ON bt.Franchise_ID = f.Franchise_ID
+        """
+        params = []
+        
+        if search_term:
+            query += " WHERE t.Title_Name ILIKE %s"
+            params.append(f"%{search_term}%")
+        
+        query += " ORDER BY t.Title_Name"
+        
+        if limit:
+            query += " LIMIT %s"
+            params.append(limit)
+        
+        return self.execute_query(query, params)
+    
+    def get_genres(self):
+        """Get all available genres"""
+        query = "SELECT Genre_ID, Genre_Name FROM Genre ORDER BY Genre_Name"
+        return self.execute_query(query)
+    
+    def get_franchises(self):
+        """Get all franchises"""
+        query = "SELECT Franchise_ID, Franchise_Name FROM Franchise ORDER BY Franchise_Name"
+        return self.execute_query(query)
+    
     # Utility methods
     def get_next_id(self, table_name, id_column):
         """Get next available ID for table"""
@@ -452,6 +710,54 @@ class DatabaseManager:
             ORDER BY ordinal_position
         """
         return self.execute_query(query, (table_name,))
+    
+    def get_database_statistics(self):
+        """Get comprehensive database statistics"""
+        stats = {}
+        
+        try:
+            # Table counts
+            tables = ['Customer', 'Profile', 'WatchHistory', 'Payment', 'Devices', 
+                     'Reviews', 'Favorites', 'MarksAsFavorite', 'Title']
+            
+            for table in tables:
+                try:
+                    count_query = f"SELECT COUNT(*) FROM {table}"
+                    result = self.execute_query(count_query)
+                    stats[f'{table.lower()}_count'] = result[0][0] if result else 0
+                except:
+                    stats[f'{table.lower()}_count'] = 0
+            
+            # Additional statistics
+            # Total watch time
+            watch_time_query = """
+                SELECT COALESCE(SUM(durationWatched), 0) / 60.0 as total_hours
+                FROM WatchHistory
+            """
+            result = self.execute_query(watch_time_query)
+            stats['total_watch_hours'] = round(result[0][0], 2) if result else 0
+            
+            # Average rating
+            rating_query = "SELECT COALESCE(AVG(rating), 0) FROM Reviews"
+            result = self.execute_query(rating_query)
+            stats['average_rating'] = round(result[0][0], 2) if result else 0
+            
+            # Active customers (with recent activity)
+            active_query = """
+                SELECT COUNT(DISTINCT c.customerID)
+                FROM Customer c
+                JOIN Profile p ON c.customerID = p.customerID
+                JOIN WatchHistory wh ON p.WatchHistoryID = wh.WatchHistoryID
+                WHERE wh.watchDate >= CURRENT_DATE - INTERVAL '30 days'
+            """
+            result = self.execute_query(active_query)
+            stats['active_customers_30d'] = result[0][0] if result else 0
+            
+            return stats
+            
+        except Exception as e:
+            self.logger.error(f"Error getting database statistics: {str(e)}")
+            return stats
     
     def test_connection(self):
         """Test database connection"""

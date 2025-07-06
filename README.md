@@ -611,6 +611,34 @@ By the end of this workshop, you should be able to:
 
 
 
+
+
+#### Alter Table
+-The alter table works as you could see in the picture below:
+> ![Alter_Table](part3/alterTableWorks.png)
+
+#### View 1
+> ![view1](part3/view1.png)
+
+#### Query 1
+> ![query1](part3/query1.png)
+
+-As you could see below Query 1 gives us lots of results:
+> ![query1Count](part3/query1Count.png)
+
+#### View 2
+> ![view2](part3/view2.png)
+
+#### Query 2
+> ![view1](part3/query2.png)
+
+
+#### Query 3
+> ![view1](part3/query3.png)
+
+---
+
+
 ---
 ## 👇 Resources
 

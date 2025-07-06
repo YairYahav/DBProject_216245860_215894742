@@ -635,6 +635,14 @@ By the end of this workshop, you should be able to:
 ---
 
 
+### שלב ד' - תכנות בסיס נתונים מתקדם
+בשלב זה פיתחנו תוכניות מתקדמות בסיס נתונים הכוללות פונקציות, פרוצדורות, טריגרים ותוכניות ראשיות. התוכניות מממשות פונקציונליות מגוונת לניהול ובקרת נתונים במערכת Netflix המשולבת.
+
+### פונקציות (Functions)
+> ![Part4](part4/part4Works.png)
+
+
+
 ---
 ## 👇 Resources
 

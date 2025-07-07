@@ -642,6 +642,29 @@ By the end of this workshop, you should be able to:
 > ![Part4](part4/part4Works.png)
 
 
+---
+### שלב ה' - יצירת ממשק גרפי לעבודה מול בסיס הנתונים  
+
+בשלב הזה נכתוב ממשק גרפי עבור האפליקציה.
+### Login:
+> ![Login](part5/images/login.png)
+
+### Customers:
+> ![Costumers](part5/images/costumers.png)
+
+### Add Customer:
+> ![Add Costumer](part5/images/add_costumer.png)
+
+### Delete:
+> ![Delete](part5/images/delete.png)
+
+### Edit Customer:
+> ![Edit Costumer](part5/images/edit_costumer.png)
+
+אפשר לצפות בשאר הקבצים והדברים בהרצה של קובץ הפייתון שיצרנו: "streaming_service_gui.py"
+
+
+
 
 ---
 ## 👇 Resources
